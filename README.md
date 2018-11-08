@@ -13,6 +13,8 @@
 ## 使用 eksctl 建立 kubernetes cluster (建議使用!!)
 https://github.com/weaveworks/eksctl   
 
+**也要使用AccessKey才能用eksctl指令**
+
 透過 eksctl 指令協助建立整套 k8s 叢集遠比直接使用cloud 9 一步步建立要快上許多
 
 eksctl 安裝
