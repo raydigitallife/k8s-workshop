@@ -1,19 +1,39 @@
-# Amazon EKS 建置流程 (使用 AWS Cloud9 做為 IDE 環境)
+# Amazon EKS 建置流程
 
-# 準備工作
+- 準備工作
+  - **不要用"公司帳戶或正式環境"的 AWS 帳戶來測試**
+  - **實作選擇 US West (Oregon), us-west-2**
+  - **使用具有 AWS Admin 權限的帳戶**
+- 注意事項
+  - **假設登入AWS 帳戶的 IAM 使用者為 abc, 需在該使用者的 IAM 產生 `AccessKey`**
+  - **測試完畢後務必刪除 AccessKey 與相關的服務**
+---
 
-- **不要用"公司帳戶或正式環境"的 AWS 帳戶來測試**
-- **實作選擇 US West (Oregon), us-west-2**
-- **使用具有 AWS Admin 權限的帳戶**
 
+## 使用 eksctl 建立 kubernetes cluster (建議使用!!)
+https://github.com/weaveworks/eksctl   
 
-# 注意事項
+透過 eksctl 指令協助建立整套 k8s 叢集遠比直接使用cloud 9 一步步建立要快上許多
 
-- **假設登入AWS 帳戶的 IAM 使用者為 abc, 需在該使用者的 IAM 產生 `AccessKey`**
-- **測試完畢後務必刪除 AccessKey 與相關的服務**
-
+eksctl 安裝
+```bash
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+```
+eksctl 建立叢集, 時間約20~30分不等
+```bash
+#建立一組 t3.large 3 nodes ebs 50GB的叢集
+eksctl create cluster --name yourname --node-type t3.large --nodes 3 --node-volume-size=50
+```
+eksctl 刪除叢集, 時間約20~30分不等
+```bash
+eksctl delete cluster --name yourname
+```
 
 ---
+
+## 使用 AWS Cloud9 做為 IDE 環境
+
 ### Cloud9 的初始化設定
 
 1.  Cloud9 開啟後, 於終端機貼上指令: `git clone https://github.com/ckmates/k8s-workshop.git`
